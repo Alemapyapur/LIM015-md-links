@@ -11,27 +11,27 @@ const fs = require('fs');
 
 // *Función que valida la ruta, si es Path Absoluto, y si es Path Relativo lo convierte en Path Absoluto
 const validatePathAbsolute = (paths) => fs.existsSync(paths) ? path.normalize(path.resolve(paths)): "El path no existe";
-// console.log(pathAbsolute(paths));
+// console.log(pathAbsolute("./proving"));
 
 // *Función que valida un archivo, statSync(devuelve información sobre la ruta)
 const validateFile = (paths) => fs.statSync(paths).isFile();
-// console.log(validateFile(paths));
+// console.log(validateFile("./proving"));
 
 // *Función que valida si el path es un directorio
 const validateDirectory = (paths) => fs.statSync(paths).isDirectory();
-// console.log(validateDirectory(paths));
+// console.log(validateDirectory("./proving"));
 
 // *Función que lee el directorio
 const validateReadDirectory = (paths) => fs.readdirSync(paths);
-// console.log(validateReadDirectory(paths));
+// console.log(validateReadDirectory("./proving"));
 
 // *Función que extrae si tiene extención .md con extname (valida archivo .md)
 const validateMd = (paths) => path.extname(paths) === '.md';
-// console.log(validateMd(paths));
+// console.log(validateMd("./proving"));
 
 // *Función que lee un archivo y lo convierte en una cadena
 const validateReadfile = (paths) => fs.readdirSync(paths).toString();
-// console.log(validateReadfile(paths));
+// console.log(validateReadfile("./proving"));
 
 // *Despues de leer un directorio, junta el nombre de los archivos con su ruta
 const fileWithPath = (paths) => {
