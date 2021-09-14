@@ -1,11 +1,3 @@
-#!/usr/bin/env node
-
-// module.exports = () => {
-//   // ...
-// };
-
-// console.log(process.argv[1]);
-
 // *Para leer un archivo de un directorio fs.readFileSync (ejecuta una forma sincrona)*
 // const fs = require('fs');
 
@@ -90,16 +82,16 @@
 
 // *Destructuracion de modulos*
 // 1ero en otro js
-    // let count = 0;
-    // const incrementar = () => count++;
-    // const decrementar = () => count--;
-    // const obtenerContador = () => count;
+//     let count = 0;
+//     const incrementar = () => count++;
+//     const decrementar = () => count--;
+//     const obtenerContador = () => count;
 
-    // module.exports = {
-    //   incrementar,
-    //   decrementar,
-    //   obtenerContador
-    // }
+//     module.exports = {
+//       incrementar,
+//       decrementar,
+//       obtenerContador
+//     }
 
 // 2do en el js principal
 // SIN FUNCIONAR
@@ -110,9 +102,38 @@
 
 // console.log(utilidades.obtenerContador());
 
-// *Leer la extencion de un archivo*
+// // *Leer la extencion de un archivo*
 // const path = require('path');
 
 // path.extname('text.txt');
 
 // console.log(path.extname('text.txt'));
+
+// Averiguar argv
+// console.log(process.argv[1]);
+
+
+// * TEXTO en prueba.md
+// # Texto
+
+// Probando texto
+
+// ## Links
+
+// [Node.js](https://nodejs.org/es/)
+// Es un entorno de ejecución para JavaScript
+// [Nodejs.org](https://nodejs.org/docs/latest/api/modules.html)
+// Es un entorno de ejecución para JavaScript
+
+// * Dependencias que faltan
+// const fetch = require('node-fetch');
+// const marked = require('marked');
+
+
+// fs.readdir('./proving', { withFileTypes:true}, (error, items) => {
+//   console.log(items)
+// });
+
+
+
+
