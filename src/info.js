@@ -135,5 +135,9 @@
 // });
 
 
+// *Concat
+
+// Combina dos o más matrices. Este método devuelve una nueva matriz sin modificar ninguna matriz existente.
+
 
 

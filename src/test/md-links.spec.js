@@ -63,16 +63,20 @@ describe('Función que lee el directorio:', () => {
 });
 
 // *Función que extrae si tiene extención .md con extname (valida archivo .md)
-// *ERROR
 describe('Función que valida un archivo .md:', () => {
-  it('Debería retornar la extención .md del archivo ', () => {
+  it('Debería retornar true si es un archivo .md', () => {
     expect(validateMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba.md'))
-    .toBe('.md');
+    .toBe(true);
+  });
+
+  it('Debería retornar false si es no es un archivo .md', () => {
+    expect(validateMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba.js'))
+    .toBe(false);
   });
 });
 
+
 // *Función que lee un archivo .md
-// *DUDA
 describe('Función que lee un archivo .md:', () => {
   it('Debería retornar el contenido del archivo .md', () => {
     expect(validateReadFileMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba.md'))
