@@ -70,13 +70,13 @@ const validatefileWithPath = (paths) => {
 
 //* Modulo para exportar las funciones declaradas
 module.exports = {
-  validatePath, //test lista
-  validatePathAbsolute, //test lista
-  validateFile, //test lista
-  validateDirectory, //test lista
-  validateReadDirectory, //test lista
-  validateMd, //test con error
-  validateReadFileMd, //test lista pero duda
-  validateReadfile, //test lista pero duda
-  validatefileWithPath, //test lista
+  validatePath,
+  validatePathAbsolute,
+  validateFile,
+  validateDirectory,
+  validateReadDirectory,
+  validateMd,
+  validateReadFileMd,
+  validateReadfile,
+  validatefileWithPath,
 }
