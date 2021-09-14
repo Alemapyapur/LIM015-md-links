@@ -35,6 +35,7 @@ const validateDirectory = (paths) => fs.statSync(paths).isDirectory();
 // *Función que lee el directorio
 const validateReadDirectory = (paths) => fs.readdirSync(paths);
 // console.log(validateReadDirectory('./src/pruebas')) // lee los archivos de la carpeta [ 'prueba', 'prueba.js', 'prueba.md', 'prueba.txt' ]
+// console.log (validateReadDirectory('./src/pruebas/prueba')); // [ 'prueba1.md', 'prueba2.md', 'prueba3.md' ]
 // console.log(validateReadDirectory('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas')); // lee los archivos de la carpeta
 
 // *Función que extrae si tiene extención .md con extname (valida archivo .md)
@@ -69,14 +70,15 @@ const validatefileWithPath = (paths) => {
 // console.log(validatefileWithPath('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 
 //* Modulo para exportar las funciones declaradas
+//* Modulo para exportar las funciones declaradas
 module.exports = {
   validatePath, //test lista
   validatePathAbsolute, //test lista
   validateFile, //test lista
   validateDirectory, //test lista
   validateReadDirectory, //test lista
-  validateMd,
-  validateReadFileMd,
-  validateReadfile,
-  validatefileWithPath,
+  validateMd, //test con error
+  validateReadFileMd, //test listo pero duda
+  validateReadfile, //test listo pero duda
+  validatefileWithPath, //test lista
 }
