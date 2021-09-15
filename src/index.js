@@ -73,27 +73,28 @@ const validatefileWithPath = (paths) => {
 // console.log(validatefileWithPath('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 
 // *Funcion para extraer archivo .md con su ruta y poder guardarlos los archivos en un array. (****)
-// const searchPathMd = (paths) => {
-//   const pathAbsolute = validatePathAbsolute(paths);
-//   let filesArray = [];
-//   if (validatePathAbsolute(pathAbsolute) && validateFile(paths)) {
-//     if (validateMd(pathAbsolute)) { //por cada elemento preguntamos si tiene extension .md y la extrae
-//       filesArray.push(pathAbsolute);
-//     }
-//   } else {
-//     const validateReadDirectory = fs.readdirSync(paths); // Lo cree en la linea 37 (Usar Recursividad?)
-//     validateReadDirectory.forEach((paths) => {
-//       filesArray = filesArray.concat(searchPathMd(path.join(pathAbsolute, paths))); // concat devuelve una nueva matriz sin modificar ninguna matriz existente.
-//     });
-//   }
-//   return filesArray;
-// };
+const searchPathMd = (paths) => {
+  const pathAbsolute = validatePathAbsolute(paths);
+  let filesArray = [];
+  if (validatePathAbsolute(pathAbsolute) && validateFile(paths)) {
+    if (validateMd(pathAbsolute)) { //por cada elemento preguntamos si tiene extension .md y la extrae
+      filesArray.push(pathAbsolute);
+    }
+  } else {
+    // const validateReadDirectory = fs.readdirSync(paths); // Lo cree en la linea 37 (Usar Recursividad?)
+    const validateReadDirectorys = validateReadDirectory(paths);
+    validateReadDirectorys.forEach((paths) => {
+      filesArray = filesArray.concat(searchPathMd(path.join(pathAbsolute, paths))); // concat devuelve una nueva matriz sin modificar ninguna matriz existente.
+    });
+  }
+  return filesArray;
+};
 
-// console.log(searchPathMd('./src/pruebas/prueba')); //devuelve los archivos .md con sus rutas
+console.log(searchPathMd('./src/pruebas/prueba')); //devuelve los archivos .md con sus rutas
 // console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba'));
 // console.log(searchPathMd('.\\src\\pruebas\\prueba'));
 
-// console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
+//console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 // Cuando se llama la carpeta, retorna todos los archivos .md apesar de que esten en otra sub carpeta
 
 //* Modulo para exportar las funciones declaradas
