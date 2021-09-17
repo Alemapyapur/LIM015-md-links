@@ -53,7 +53,7 @@
 // const fs = require('fs');
 
 // console.log('Iniciando Lectura')
-// var files = fs.readdirSync('./src');
+// const files = fs.readdirSync('./src');
 
 // console.log('Finalizando Lectura')
 // console.log(files);

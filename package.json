@@ -25,7 +25,9 @@
   },
   "homepage": "https://github.com/Alemapyapur/LIM015-md-links#readme",
   "dependencies": {
-    "jest": "^27.1.0"
+    "jest": "^27.1.0",
+    "marked": "^3.0.4",
+    "node-fetch": "^2.6.1"
   },
   "bin": {
     "md-links": "index.js"

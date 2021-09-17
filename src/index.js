@@ -4,8 +4,8 @@ const path = require('path');
 // 2) El filysistem, modulo que proporciona utilidades para trabajar con rutas de directorio y archivos
 // permite solicitar un recurso de forma asincrónica
 const fs = require('fs');
-
-
+const marked = require('marked');
+// const fetch = require('node-fetch');
 
 // *Función que valida la ruta
 const validatePath = (paths) => fs.existsSync(paths);
@@ -34,7 +34,7 @@ const validateDirectory = (paths) => fs.statSync(paths).isDirectory();
 // console.log(validateDirectory('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba.md')); //false
 
 // *Función que lee el directorio (Para hacerlo mas recursivo, se uso esta funcion dentro de searchPathMd)
-const validateReadDirectory = (paths) => fs.readdirSync(paths);
+// const validateReadDirectory = (paths) => fs.readdirSync(paths);
 // console.log(validateReadDirectory('./src/pruebas')) // lee los archivos de la carpeta [ 'prueba', 'prueba.js', 'prueba.md', 'prueba.txt' ]
 // console.log (validateReadDirectory('./src/pruebas/prueba')); // [ 'prueba1.md', 'prueba2.md', 'prueba3.md' ]
 // console.log(validateReadDirectory('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas')); // lee los archivos de la carpeta
@@ -72,18 +72,18 @@ const validatefileWithPath = (paths) => {
 // console.log(validatefileWithPath('./src/pruebas')); // devuelve los archivos que esta dentro de la carpeta pruebas
 // console.log(validatefileWithPath('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 
-// *Funcion para extraer archivo .md con su ruta y poder guardarlos los archivos en un array. (****)
+// *Funcion para buscar archivo .md con su ruta para poder guardarlos los archivos en un array. (****)
 const searchPathMd = (paths) => {
   const pathAbsolute = validatePathAbsolute(paths);
   let filesArray = [];
   if (validatePathAbsolute(pathAbsolute) && validateFile(paths)) {
-    if (validateMd(pathAbsolute)) { //por cada elemento preguntamos si tiene extension .md y la extrae
+    if (validateMd(pathAbsolute)) { //por cada elemento preguntamos si tiene extension .md y la guarda
       filesArray.push(pathAbsolute);
     }
-  } else {
-    // const validateReadDirectory = fs.readdirSync(paths); // Lo cree en la linea 37 (Usar Recursividad?)
-    const validateReadDirectorys = validateReadDirectory(paths);
-    validateReadDirectorys.forEach((paths) => {
+  } else { 
+    const validateReadDirectory = fs.readdirSync(paths); // Lo cree en la linea 37 (Usar Recursividad?)
+    //const validateReadDirectorys = validateReadDirectory(paths);
+    validateReadDirectory.forEach((paths) => {
       filesArray = filesArray.concat(searchPathMd(path.join(pathAbsolute, paths))); // concat devuelve una nueva matriz sin modificar ninguna matriz existente.
     });
   }
@@ -97,15 +97,63 @@ console.log(searchPathMd('./src/pruebas/prueba')); //devuelve los archivos .md c
 //console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 // Cuando se llama la carpeta, retorna todos los archivos .md apesar de que esten en otra sub carpeta
 
+
+// *Funcion para extraer los links de un archivo .md, devuelve array de objetos
+// const extractLinksMd = (paths) => {
+//   const linksMd = searchPathMd(paths);
+//   let linksArray = [];
+//   linksMd.forEach((file) => {
+//     const validateReadFilesMds = validateReadFileMd(file);
+//     const renderer = new marked.Renderer(); // renderer define salida con propiedades
+//     renderer.link = (href, text, file) => {
+//     //por cada elemento preguntamos si tiene extension .md y la extrae
+//       const linkProperties = {
+//         href,
+//         text,
+//         file
+//       };
+//       linksArray.push(linkProperties);
+//     };
+//     marked(validateReadFilesMds, { renderer });
+//   });
+//   return linksArray;
+// };
+
+// console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md'));
+
+
+// const extractLinksMd = (paths) => {
+//   const linksMd = searchPathMd(paths);
+//   const linksArray = [];
+//   linksMd.forEach((file) => {
+//     const validateReadFilesMd = validateReadFileMd(file);
+//     // const validateReadFilesMd = fs.readFileSync(thePath, 'utf8');
+//     const renderer = new marked.Renderer();
+//     renderer.link = (href, text, file) => {
+//       linksArray.push({
+//         href,
+//         text,
+//         file
+//       });
+//     };
+//     marked(validateReadFilesMd, { renderer });
+//   });
+//   return linksArray;
+// };
+
+
+
 //* Modulo para exportar las funciones declaradas
 module.exports = {
   validatePath, //test lista
   validatePathAbsolute, //test lista
   validateFile, //test lista
   validateDirectory, //test lista
-  validateReadDirectory, //test lista individual, error si se usa en forma recursiva
+  // validateReadDirectory, //test lista individual, error si se usa en forma recursiva
   validateMd, //test lista
   validateReadFileMd, //test listo pero duda
   validateReadfile, //test listo pero duda
   validatefileWithPath, //test lista
+  searchPathMd, // falta verificar
+  //extractLinksMd
 }

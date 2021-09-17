@@ -1,5 +1,5 @@
 const { validatePath, validatePathAbsolute, validateFile, validateDirectory,
-  validateReadDirectory, validateMd, validateReadFileMd, validateReadfile, validatefileWithPath
+  validateReadDirectory, validateMd, validateReadFileMd, validateReadfile, validatefileWithPath, searchPathMd,
 } = require('../index');
 
 // *Función que valida la ruta
@@ -95,7 +95,7 @@ describe('Función que lee un archivo:', () => {
 
 // *Despues de leer un directorio, junta el nombre de los archivos con su ruta
 describe('Función que junta los nombres de los archivos con sus rutas:', () => {
-  it('Deberia retornar cada archivo del directorio con su ruta', () => {
+  it('Debería retornar cada archivo del directorio con su ruta', () => {
     //Se crea una variable filePruebas donde se menciona las rutas de la carpeta pruebas, para comparar con lo que devuelva.
     const filePruebas = [
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba',
@@ -107,3 +107,18 @@ describe('Función que junta los nombres de los archivos con sus rutas:', () => 
     .toEqual(filePruebas);
   });
 });
+
+// *Función para buscar archivo .md con su ruta para poder guardarlos los archivos en un array.
+  describe('Función que busca archivos con extensión .md de un file o directorio', () => {
+    it('Debería retornar solo archivos .md con su ruta', () => {
+    //Se crea una variable fileMd donde se menciona las rutas de la carpeta pruebas, para comparar con lo que devuelva.
+      const fileMd = [
+        // 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba.md',
+        'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md',
+        'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md',
+        'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md',
+      ];
+      expect(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\'))
+      .toEqual(fileMd);
+    });
+  });
