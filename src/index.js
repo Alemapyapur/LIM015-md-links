@@ -34,7 +34,7 @@ const validateDirectory = (paths) => fs.statSync(paths).isDirectory();
 // console.log(validateDirectory('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas')); //true
 // console.log(validateDirectory('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba.md')); //false
 
-// *Función que lee el directorio (Para hacerlo mas recursivo, se uso esta funcion dentro de searchPathMd)
+// *Función que lee el directorio (Para hacerlo mas recursivo, se uso esta Función dentro de searchPathMd)
 const validateReadDirectory = (paths) => fs.readdirSync(paths);
 // console.log(validateReadDirectory('./src/pruebas')) // lee los archivos de la carpeta [ 'prueba', 'prueba.js', 'prueba.md', 'prueba.txt' ]
 // console.log (validateReadDirectory('./src/pruebas/prueba')); // [ 'prueba1.md', 'prueba2.md', 'prueba3.md' ]
@@ -49,7 +49,7 @@ const validateMd = (paths) => path.extname(paths) === '.md';
 
 // * --------------------------------------------------------------------------------* //
 // * Parece que se obtiene los mismo, averiguar readdirSync y readFilesSync
-// *Funcion que lee un archivo .md
+// *Función que lee un archivo .md
 const validateReadFileMd = (paths) => fs.readFileSync(paths, 'utf8');
 // console.log(validateReadFileMd('./src/pruebas/prueba.md'));
 // devuelve lo que hay dentro del archivo .md Listo [Node.js](https://nodejs.org/es/) [Nodejs.org](https://nodejs.org/docs/latest/api/modules.html)
@@ -73,7 +73,7 @@ const validatefileWithPath = (paths) => {
 // console.log(validatefileWithPath('./src/pruebas')); // devuelve los archivos que esta dentro de la carpeta pruebas
 // console.log(validatefileWithPath('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 
-// *Funcion para buscar archivo .md con su ruta para poder guardarlos los archivos en un array. (****)
+// *Función para buscar archivo .md con su ruta para poder guardarlos los archivos en un array. (****)
 const searchPathMd = (paths) => {
   const pathAbsolute = validatePathAbsolute(paths);
   let filesArray = [];
@@ -99,7 +99,7 @@ const searchPathMd = (paths) => {
 // Cuando se llama la carpeta, retorna todos los archivos .md apesar de que esten en otra sub carpeta
 
 
-// *Funcion para extraer los links de un archivo .md, devuelve array de objetos
+// *Función para extraer los links de un archivo .md, devuelve array de objetos
 const extractLinksMd = (paths) => {
   const linksMd = searchPathMd(paths);
   let linksArray = [];
@@ -124,7 +124,7 @@ const extractLinksMd = (paths) => {
 // console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md')); //retorna pero no reconoce el texto solo los links
 // console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md'));
 
-// *Funcion para validar los links que se extrajeron de un archivo .md
+// *Función para validar los links que se extrajeron de un archivo .md
 const validateLink = (paths) => {
   const linksMd = extractLinksMd(paths);
   const validateLinks = linksMd.map((link) => fetch(link.href)
@@ -154,7 +154,31 @@ const validateLink = (paths) => {
 // validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then(response => (console.log(response)));
 
 
-//* Modulo para exportar las funciones declaradas
+// *Función de verificar cantidad de uniqueLinks, brokenLinks y totalLinks
+const uniqueLinks = (links) => [...new Set(links.map((link) => link.hrefPath))];
+// const uniqueLinks = (link) => {
+//   const total = link.length;
+//   const unique = new Set(link.map(elemento => elemento.href)).size;
+//   return `Total: ${total} \nUnique: ${unique}`
+// }
+
+const brokenLinks = (links) => links.filter((link) => link.status >= 400);
+// const brokenLinks = (link) => {
+//   const broken = link.filter(elemento=> elemento.status >= 400).length;
+//   return `\nBroken: ${broken} `
+// }
+
+// Función que devuelve los uniqueLinks y brokenLinks de los links en string
+const totalLinks = (paths) => new Promise((resolve) => {
+  validateLink(paths)
+  .then((links) => {
+      resolve(`Total: ${links.length}\nUnique: ${uniqueLinks(links).length}\nBroken: ${brokenLinks(links).length}`);
+  });
+});
+
+totalLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md').then(response => (console.log(response)))
+
+//* Modulo para exportar las Funciónes declaradas
 module.exports = {
   validatePath, //test lista
   validatePathAbsolute, //test lista
@@ -167,5 +191,6 @@ module.exports = {
   validatefileWithPath, //test lista
   searchPathMd, // falta verificar
   extractLinksMd,
-  validateLink
+  validateLink,
+  totalLinks
 }
