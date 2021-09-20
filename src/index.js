@@ -150,10 +150,10 @@ const validateLink = (paths) => {
   return Promise.all(validateLinks);
 };
 
-// validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then(response => (console.log(response)))
+validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then(response => (console.log(response)))
 // validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then(response => (console.log(response)));
 
-
+// ******************************* CLI ****************************** //
 // *Función de verificar cantidad de uniqueLinks, brokenLinks y totalLinks
 const uniqueLinks = (links) => [...new Set(links.map((link) => link.hrefPath))];
 // const uniqueLinks = (link) => {
@@ -168,7 +168,7 @@ const brokenLinks = (links) => links.filter((link) => link.status >= 400);
 //   return `\nBroken: ${broken} `
 // }
 
-// Función que devuelve los uniqueLinks y brokenLinks de los links en string
+// Función que devuelve los uniqueLinks y brokenLinks de los links en string (OBS)
 const totalLinks = (paths) => new Promise((resolve) => {
   validateLink(paths)
   .then((links) => {
@@ -176,7 +176,7 @@ const totalLinks = (paths) => new Promise((resolve) => {
   });
 });
 
-totalLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md').then(response => (console.log(response)))
+// totalLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md').then(response => (console.log(response)))
 
 //* Modulo para exportar las Funciónes declaradas
 module.exports = {

@@ -161,6 +161,8 @@ describe('Función que extre los links de un archivo o directorio .md', () => {
         file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md'
       }
     ];
+    // console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md'));
+    // console.log(linksMd)
     expect(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md'))
     .toEqual(linksMd);
   });
@@ -172,23 +174,20 @@ describe('Función que valida los links extraidos', () => {
       expect(typeof validateLink).toBe('function');
     });
     it('Debería validar los links que extraidos', () => {
-    //Se crea una variable extractLinks donde se menciona las rutas de la carpeta pruebas, para comparar con lo que devuelva.
-      const extractLinks = [
-        {
-          href: 'https://nodejs.org/es/',
-          text: 'Node.js',
-          file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md'
-        }
-      ];
+    //Se crea una variable returnLinks con la cual se comparara la ruta de prueba, para comparar con lo que devuelva.
       const returnLinks = [
         {
           href: 'https://nodejs.org/es/',
           text: 'Node.js',
           file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md',
-          statusText: 200,
-          message: 'OK'
+          statusText: 'OK',
+          message: 200
         }
       ];
-      return validateLink(extractLinks).then((res) => {expect(res).toEqual(returnLinks)});
+
+      return validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then((res) => {
+        // console.log(res);
+        // console.log(returnLinks);
+        expect(res).toEqual(returnLinks)});
     });
 });
