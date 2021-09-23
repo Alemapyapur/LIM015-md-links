@@ -1,6 +1,6 @@
 const { validatePath, validatePathAbsolute, validateFile, validateDirectory, validateReadDirectory,
   validateMd, validateReadFileMd, validateReadfile, validatefileWithPath, searchPathMd, extractLinksMd, validateLink
-} = require('../index');
+} = require('../api');
 
 // *Función que valida la ruta
 describe('Función que valida la ruta:', () => {
@@ -140,6 +140,7 @@ describe('Función que busca archivos con extensión .md de un file o directorio
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md',
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md',
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md',
+      'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md'
     ];
     expect(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\'))
     .toEqual(fileMd);

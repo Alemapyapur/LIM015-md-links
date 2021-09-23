@@ -21,6 +21,7 @@ const validatePathAbsolute = (paths) => fs.existsSync(paths) ? path.normalize(pa
 // console.log(validatePathAbsolute('./src/pruebass')); // devuelve la ruta no existe
 
 // *Función que valida un archivo, statSync(devuelve información sobre la ruta)
+// const validateFile = isAPath => fs.lstatSync(isAPath).isFile();
 const validateFile = (paths) => fs.statSync(paths).isFile();
 // console.log(validateFile('./src/pruebas/prueba.md')); // true
 // console.log(validateFile('./src/pruebas')); //false
@@ -41,6 +42,7 @@ const validateReadDirectory = (paths) => fs.readdirSync(paths);
 // console.log(validateReadDirectory('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas')); // lee los archivos de la carpeta
 
 // *Función que valida archivo .md, verifica si tiene extención .md con extname
+// const validateMd = (isAPath) => path.extname(isAPath) === '.md'
 const validateMd = (paths) => path.extname(paths) === '.md';
 // console.log(validateMd('./src/pruebas/prueba.md')); // true porque es un archivo .md
 // console.log(validateMd('./src/pruebas/prueba.js')); // false porque es un archivo .js
@@ -74,7 +76,9 @@ const validatefileWithPath = (paths) => {
 // console.log(validatefileWithPath('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 
 // *Función para buscar archivo .md con su ruta para poder guardarlos los archivos en un array. (****)
+
 const searchPathMd = (paths) => {
+  // console.log({paths})
   const pathAbsolute = validatePathAbsolute(paths);
   let filesArray = [];
   if (validatePathAbsolute(pathAbsolute) && validateFile(paths)) {
@@ -92,10 +96,10 @@ const searchPathMd = (paths) => {
 };
 
 // console.log(searchPathMd('./src/pruebas/prueba')); //devuelve los archivos .md con sus rutas
-// console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba'));
+// console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src'));
 // console.log(searchPathMd('.\\src\\pruebas\\prueba'));
 
-//console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
+// console.log(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 // Cuando se llama la carpeta, retorna todos los archivos .md apesar de que esten en otra sub carpeta
 
 
@@ -150,31 +154,34 @@ const validateLink = (paths) => {
   return Promise.all(validateLinks);
 };
 
-validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then(response => (console.log(response)))
+// validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md').then(response => (console.log(response)))
 // validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then(response => (console.log(response)));
 
-// ******************************* CLI ****************************** //
-// *Función de verificar cantidad de uniqueLinks, brokenLinks y totalLinks
-const uniqueLinks = (links) => [...new Set(links.map((link) => link.hrefPath))];
-// const uniqueLinks = (link) => {
-//   const total = link.length;
-//   const unique = new Set(link.map(elemento => elemento.href)).size;
-//   return `Total: ${total} \nUnique: ${unique}`
-// }
+// ******************************* STATS ****************************** //
+// *Función de verificar cantidad de links unicos (uniqueLinks)
+const uniqueLinks = (link) => {
+  // const unique = new Set(link.map(elemento => elemento.href)).size;
+  // const uniqueLink = `\nUnique: ${unique}`;
+  const unique = new Set(link.map(elemento => elemento.href));
+  const uniqueLink = `\nUnique: ${unique.length}`;
+  return uniqueLink;
+};
 
-const brokenLinks = (links) => links.filter((link) => link.status >= 400);
-// const brokenLinks = (link) => {
-//   const broken = link.filter(elemento=> elemento.status >= 400).length;
-//   return `\nBroken: ${broken} `
-// }
+// console.log(uniqueLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md'));
 
-// Función que devuelve los uniqueLinks y brokenLinks de los links en string (OBS)
-const totalLinks = (paths) => new Promise((resolve) => {
-  validateLink(paths)
-  .then((links) => {
-      resolve(`Total: ${links.length}\nUnique: ${uniqueLinks(links).length}\nBroken: ${brokenLinks(links).length}`);
-  });
-});
+// *Función de verificar cantidad de links rotos (broken Link)
+const brokenLinks = (links) => {
+  const broken = links.filter((elem) => elem.status >= 400 || elem.status == 'NOT FOUND')
+  const brokenLink = `\nBroken: ${broken.length}`;
+  return brokenLink;
+}
+
+// *Función de devuelve cantidad de links totales
+const totalLinks = (link) => {
+  const total = link.map(link => link.href);
+  const totalLink = `\nTotal: ${total.length}`;
+  return totalLink;
+}
 
 // totalLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md').then(response => (console.log(response)))
 
@@ -192,5 +199,7 @@ module.exports = {
   searchPathMd, // falta verificar
   extractLinksMd,
   validateLink,
+  uniqueLinks,
+  brokenLinks,
   totalLinks
 }
