@@ -54,14 +54,14 @@ const mdLinks = (path, options) =>
 //   }
 // });
 
-  // mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', true).then(resolve => {
-  //   console.log(resolve);
-  // }).catch(reject => console.log(reject));
+mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', true).then(resolve => {
+  console.log(resolve);
+}).catch(reject => console.log(reject));
 //node ./src/md-links.js
 
-  // mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebasds', false).then(resolve => {
-  //   console.log(resolve);
-  // }).catch(reject => console.log(reject));
+// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebasds', false).then(resolve => {
+//   console.log(resolve);
+// }).catch(reject => console.log(reject));
 
 
 module.exports = { mdLinks };
