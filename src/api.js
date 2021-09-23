@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const marked = require('marked');
 const fetch = require('node-fetch');
-const { stringify } = require('querystring');
+// const { stringify } = require('querystring');
 
 // *Función que valida la ruta
 const validatePath = (paths) => fs.existsSync(paths);

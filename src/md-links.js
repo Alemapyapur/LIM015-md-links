@@ -14,11 +14,11 @@ const mdLinks = (path, options) =>
           return apiPage.extractLinksMd(link);
         });
         const getLinks = apiPage.extractLinksMd(path)
-         // console.log({getLinks})
+        // console.log({getLinks})
         if (options.validate === true) {
           const validLinks = getLinks.map((links) => {
-            const getLinkValid = apiPage.validateLink(links);
-            // console.log({getLinkValid})
+            const getLinkValid = apiPage.validateLink(links.file);
+            // console.log({validLinks})
             return getLinkValid;
           });
             resolve(Promise.all(validLinks));
@@ -38,7 +38,7 @@ const mdLinks = (path, options) =>
 //       reject("La ruta no existe.");
 //   } else {
 //     const getFiles = apiPage.searchPathMd(absolutePath);
-//     const getLinks = getFiles.map((link) => {
+//     const noseusar = getFiles.map((link) => {
 //     const getLinks = apiPage.extractLinksMd(link);
 //       return getLinks;
 //     });
@@ -54,14 +54,20 @@ const mdLinks = (path, options) =>
 //   }
 // });
 
-mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', true).then(resolve => {
+// Cuando pongo true, y la ruta si existe me deberia retorna 5 propiedades href, text, file, file, statusText y message
+mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', { validate: true }).then(resolve => {
   console.log(resolve);
 }).catch(reject => console.log(reject));
-//node ./src/md-links.js
 
-// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebasds', false).then(resolve => {
+
+// Cuando pongo false, y la ruta si existe me deberia retorna 3 propiedades href, text y file
+// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas', { validate: false }).then(resolve => {
 //   console.log(resolve);
 // }).catch(reject => console.log(reject));
 
+// Cuando pongo false, y la ruta no existe me deberia retorna un mensaje "La ruta no existe"
+// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebasds', { validate: false }).then(resolve => {
+//   console.log(resolve);
+// }).catch(reject => console.log(reject));
 
 module.exports = { mdLinks };
