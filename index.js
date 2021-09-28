@@ -20,8 +20,11 @@ console.log("*", process.argv.length);  */
 
 if (argument.length === 1) {
   mdLinks(argument[0], { validate: false })
-  .then(resolve => {console.log(resolve)})
-  .catch(reject => console.log(errMsg, reject));
+  .then(resolve => {
+    resolve.map((objeto) => {
+    console.log(`${objeto.file} | ${objeto.text} | ${objeto.href}`);})
+  })
+  .catch(reject => console.log(reject));
 }
 
 if (argument.length === 2) {
@@ -36,7 +39,7 @@ if (argument.length === 2) {
       ${objeto.href} | ${objeto.statusText} | ${objeto.message}`);
       })
     })
-    .catch(reject => console.log(errMsg, reject));
+    .catch(reject => console.log(reject));
     break;
 
   case '--stats':
@@ -71,7 +74,7 @@ if (argument.length === 2) {
     `)
     break;
 
-  default: console.log('Comando no válido. Ingrese --help');
+  default: console.log('Comando no válido. Necesita ayuda ingrese --help');
     break;
   }
 }
