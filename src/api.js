@@ -75,7 +75,7 @@ const validatefileWithPath = (paths) => {
 // console.log(validatefileWithPath('./src/pruebas')); // devuelve los archivos que esta dentro de la carpeta pruebas
 // console.log(validatefileWithPath('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas'));
 
-// *Función para buscar archivo .md con su ruta para poder guardarlos los archivos en un array. (****)
+// *Función para buscar archivos .md con su ruta para poder guardarlos los archivos en un array. (****)
 
 const searchPathMd = (paths) => {
   // console.log({paths})
@@ -110,7 +110,7 @@ const extractLinksMd = (paths) => {
   linksMd.forEach((file) => { //forEach() ejecuta la función callback una vez por cada elemento del array;
     const validateReadFilesMds = validateReadFileMd(file);
     const renderer = new marked.Renderer(); // renderer define salida con propiedades
-    renderer.link = (href, title, text) => { // verificar title
+    renderer.link = (href, title, text) => { // busca los links del archivo y solicita los argumentos
     //por cada elemento preguntamos si tiene extension .md y lo extrae
       const linkProperties = {
         href: href,
@@ -127,18 +127,20 @@ const extractLinksMd = (paths) => {
 // console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba'));
 // console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md')); //retorna pero no reconoce el texto solo los links
 // console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md'));
+////console.log(extractLinksMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd'));
 
-// *Función para validar los links que se extrajeron de un archivo .md
+// ******************************* HTTP ****************************** //
+// *Promesa para validar los links que se extrajeron de un archivo .md
 const validateLink = (paths) => {
   const linksMd = extractLinksMd(paths);
   const validateLinks = linksMd.map((link) => fetch(link.href)
-      .then((res) => {
-        if (res.status >= 200 && res.status < 400) {
-        return {
-          ...link,
-          statusText: res.statusText,
-          message: res.status,
-        };
+    .then((res) => {
+      if (res.status >= 200 && res.status < 400) {
+      return {
+        ...link,
+        statusText: res.statusText,
+        message: res.status,
+      };
       }
       return {
         ...link,
@@ -154,36 +156,48 @@ const validateLink = (paths) => {
   return Promise.all(validateLinks);
 };
 
-// validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md').then(response => (console.log(response)))
-// validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md').then(response => (console.log(response)));
+//validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebas3.md').then(resolve => {console.log(resolve)}).catch(reject => console.log(reject));
+//validateLink('https://docs.npmjs.com/cli/install').then(response => (console.log(response)));
+    // validateLink('https://docs.npmjs.com/cli/install').then(resolve => {
+    //     console.log(resolve);
+    //   }).catch(reject => console.log(reject));
 
 // ******************************* STATS ****************************** //
+
 // *Función de verificar cantidad de links unicos (uniqueLinks)
-const uniqueLinks = (link) => {
-  // const unique = new Set(link.map(elemento => elemento.href)).size;
-  // const uniqueLink = `\nUnique: ${unique}`;
-  const unique = new Set(link.map(elemento => elemento.href));
-  const uniqueLink = `\nUnique: ${unique.length}`;
-  return uniqueLink;
+const uniqueLinks = (links) => {
+  const unique = new Set(links.map(elem => elem.href));
+  //const uniqueLink = `\nUnique: ${unique.size}`;
+  return unique.size;
 };
+// console.log(uniqueLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md'));
 
-// console.log(uniqueLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md'));
-
-// *Función de verificar cantidad de links rotos (broken Link)
+// *Función de verificar cantidad de links rotos (broken Link) VERIFICAR SINO PEDIR OH
+// const brokenLinks = (links) => links.filter((elem) => elem.status >= 400 || elem.status == 'NOT FOUND')
 const brokenLinks = (links) => {
-  const broken = links.filter((elem) => elem.status >= 400 || elem.status == 'NOT FOUND')
+  const broken = links.filter((elem) => elem.message >= 400 || elem.statusText == 'NOT FOUND')
+  // console.log(links)
+  // const broken = links.filter((elem) => elem.message >= 400)
+  // console.log(broken);
   const brokenLink = `\nBroken: ${broken.length}`;
   return brokenLink;
 }
 
+// brokenLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md')
+//console.log(brokenLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md'));
+
 // *Función de devuelve cantidad de links totales
+// const totalLinks = (paths) => new Promise((resolve) => {
+//   validateLink(paths)
+//   .then((links) => {
+//       resolve(`\nTotal: ${links.length}\nUnique: ${uniqueLinks(links)}\nBroken: ${brokenLinks.length}`);
+//   });
+// });
 const totalLinks = (link) => {
   const total = link.map(link => link.href);
   const totalLink = `\nTotal: ${total.length}`;
   return totalLink;
 }
-
-// totalLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md').then(response => (console.log(response)))
 
 //* Modulo para exportar las Funciónes declaradas
 module.exports = {

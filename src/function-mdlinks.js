@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const apiPage = require('./api.js');
+// const simplePath = process.argv[2]; // el 2 representa el indice
 
 const mdLinks = (path, options) =>
   new Promise((resolve, reject) => {
@@ -14,14 +15,20 @@ const mdLinks = (path, options) =>
           return apiPage.extractLinksMd(link);
         });
         const getLinks = apiPage.extractLinksMd(path)
-        // console.log({getLinks})
+        // console.log({getLinks}) // me devuelve 3 propiedades
         if (options.validate === true) {
-          const validLinks = getLinks.map((links) => {
-            const getLinkValid = apiPage.validateLink(links.file);
-            // console.log({validLinks})
-            return getLinkValid;
-          });
-            resolve(Promise.all(validLinks));
+          const validLinks = apiPage.validateLink(absolutePath);
+          // const validLinks = getLinks.map((links) => {
+          //   const getLinkValid = apiPage.validateLink(links.file);
+          //   // console.log({getLinkValid}) // me devuelve 5 propiedades
+          //   return getLinkValid;
+          // });
+          // console.log({validLinks})
+
+          // (validLinks).then(resolve => { console.log({resolve})});
+            // resolve(Promise.all(validLinks));
+            resolve(validLinks);
+
           } else {
             resolve(getLinks);
           }
@@ -54,14 +61,19 @@ const mdLinks = (path, options) =>
 //   }
 // });
 
-// Cuando pongo true, y la ruta si existe me deberia retorna 5 propiedades href, text, file, file, statusText y message
-mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', { validate: true }).then(resolve => {
-  console.log(resolve);
-}).catch(reject => console.log(reject));
 
+// Cuando pongo true, y la ruta si existe me deberia retorna 5 propiedades href, text, file, file, statusText y message
+// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', { validate: true }).then(resolve => {
+//   console.log(resolve);
+// }).catch(reject => console.log(reject));
+
+// mdLinks(simplePath, { validate: true }).then(resolve => {
+//   console.log(resolve);
+// }).catch(reject => console.log(reject));
+// node ./src/md-links.js src\pruebas\prueba\pruebamd\pruebamdlinks.md
 
 // Cuando pongo false, y la ruta si existe me deberia retorna 3 propiedades href, text y file
-// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas', { validate: false }).then(resolve => {
+// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', { validate: true }).then(resolve => {
 //   console.log(resolve);
 // }).catch(reject => console.log(reject));
 
