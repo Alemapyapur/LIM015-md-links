@@ -1,7 +1,7 @@
 const { validatePath, validatePathAbsolute, validateFile, validateDirectory, validateReadDirectory,
   validateMd, validateReadFileMd, validateReadfile, validatefileWithPath, searchPathMd, extractLinksMd, validateLink,
-  uniqueLinks, brokenLinks, totalLinks
-} = require('../api');
+} = require('../api.js');
+const {uniqueLinks, brokenLinks, totalLinks} = require('../api.js')
 const { mdLinks } = require('../function-mdlinks.js')
 
 // *Función que valida la ruta
@@ -151,7 +151,7 @@ describe('Función que busca archivos con extensión .md de un file o directorio
 });
 
 
-// *Funcion para extraer los links de un archivo .md, devuelve array de objetos
+// *Función para extraer los links de un archivo .md, devuelve array de objetos
 describe('Función que extre los links de un archivo o directorio .md', () => {
   it('extractLinksMd es una función', () => {
     expect(typeof extractLinksMd).toBe('function');
@@ -172,7 +172,7 @@ describe('Función que extre los links de un archivo o directorio .md', () => {
   });
 });
 
-// *Funcion para validar los links que se extrajeron de un archivo .md
+// *Función para validar los links que se extrajeron de un archivo .md
 describe('Función que valida los links extraidos', () => {
     it('validateLink es una función', () => {
       expect(typeof validateLink).toBe('function');
@@ -237,46 +237,39 @@ const validLinks = [
   }
 ];
 
-// *Funcion para validar los links unicos, totales y rotos.
-describe('Nos muestra enlaces unicos',() => {
-  it('Deberia ser una funcion', () => {
+// *Función para validar los links unicos, totales y rotos.
+describe('Función que retorna enlaces unicos',() => {
+  it('uniqueLinks debería ser una función', () => {
     expect(typeof uniqueLinks).toBe('function');
   });
-  it('Deberia retornar enlaces unicos', () => {
+  it('Debería retornar enlaces unicos', () => {
     expect(uniqueLinks(validLinks)).toBe(3)
   });
 });
 
-describe('Nos muestra enlaces rotos',() => {
-  it('Deberia ser una funcion', () => {
+describe('Función que retorna enlaces rotos',() => {
+  it('brokenLinks debería ser una función', () => {
     expect(typeof brokenLinks).toBe('function');
   });
-  it('Deberia retornar enlaces rotos', () => {
+  it('Debería retornar enlaces rotos', () => {
     // console.log(brokenLinks(validLinks))
     expect(brokenLinks(validLinks)).toEqual("\nBroken: 1")
   });
 });
 
-describe('Nos muestra enlaces totales',() => {
-  it('Deberia ser una funcion', () => {
+describe('Función que retorna enlaces totales',() => {
+  it('totalLinks debería ser una función', () => {
     expect(typeof totalLinks).toBe('function');
   });
-  it('Deberia retornar enlaces totales', () => {
-    // const output = {
-    //   "Total": 3,
-    //   "Unique": 3,
-    //   "Broken": 1,
-    // }
-    //expect(totalLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md'))
+  it('Debería retornar enlaces totales', () => {
     expect(totalLinks(validLinks))
-    // .toEqual("\nTotal: 3\nUnique: 3\nBroken: 1")
     .toEqual('\nTotal: 3')
   });
 });
 
-// *Funcion MdLinks
-describe('Funcion MdLinks que valida los links', () => {
-  it('si es false, deberia retornar un array con sus 3 propiedades.', () => {
+// *Función MdLinks
+describe('Función MdLinks que valida los links', () => {
+  it('Debería retornar un array con sus 3 propiedades si es FALSE.', () => {
     const mdlinksFiles = [
       {
         href: 'https://nodejs.org/api/path.html',
@@ -298,7 +291,7 @@ describe('Funcion MdLinks que valida los links', () => {
     .resolves.toEqual(mdlinksFiles);
   });
 
-  it('si es true, deberia retornar un array con sus 5 propiedades y mensaje ok, staus 200.', () => {
+  it('Debería retornar un array con sus 5 propiedades si es TRUE.', () => {
     const mdlinkProp = [
       {
         href: 'https://nodejs.org/api/path.html',
@@ -326,7 +319,7 @@ describe('Funcion MdLinks que valida los links', () => {
     .resolves.toEqual(mdlinkProp);
   });
 
-  test('si la ruta no existe debe devolver el mensaje de error.', () => {
+  test('Debería retornar la ruta no existe, si hay un ERROR.', () => {
     const error  = 'La ruta no existe';
     return expect(mdLinks('../pruebas/prueba/pruebamd/pruebamdlinks2.md')).rejects.toEqual(error);
   });
