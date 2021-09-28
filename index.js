@@ -6,13 +6,12 @@ const { uniqueLinks, brokenLinks, totalLinks } = require('./src/api.js')
 // Retorna un arr con los arg pasados a la terminal, 1 ejecutable node, 2 ruta del ejecutabl,3 args
 const [, , ...argument] = process.argv;
 
-/*
-console.log(process.argv[0]); // node (length 1)
-console.log(process.argv[1]); // mdlinks (length 2)
-console.log(process.argv[2]); // path (length 3)
-console.log(process.argv[3]); // validate  or stats (length 4)
-console.log(process.argv[4]); // stats or validate(length 5)
-console.log("*", process.argv.length);  */
+// console.log(process.argv[0]); // node (length 1)
+// console.log(process.argv[1]); // mdlinks (length 2)
+// console.log(process.argv[2]); // path (length 3)
+// console.log(process.argv[3]); // validate  or stats (length 4)
+// console.log(process.argv[4]); // stats or validate(length 5)
+// console.log("*", process.argv.length);  */
 
 // * +----------------------------------------------------------------------------------------------------------------+
 // * |                                                OPTION STATS                                                    |
@@ -48,14 +47,6 @@ if (argument.length === 2) {
       .catch(reject => console.log(reject));
     break;
 
-  case '--validate--stats':
-  // case '--validate' && '--stats':
-    mdLinks(argument[0], { validate: true })
-      .then(resolve => console.log(`${totalLinks(resolve)} \nUnique: ${uniqueLinks(resolve)} ${brokenLinks(resolve)}`))
-      .catch(reject => console.log(reject));
-    break;
-
-
   case '--help':
     console.log(`
     +--------------------+--------------------------------------------------------+
@@ -68,6 +59,7 @@ if (argument.length === 2) {
     | --validate         | Muestra la ruta, el texto, enlace, status y el mensaje |
     +--------------------+--------------------------------------------------------+
     | --validate --stats | Muestra el total de enlaces unicos y rotos             |
+    | --stats --validate |                                                        |
     +---------------------+-------------------------------------------------------+
     | --help             | Muestra los comandos                                   |
     +--------------------+--------------------------------------------------------+
@@ -76,5 +68,19 @@ if (argument.length === 2) {
 
   default: console.log('Comando no válido. Necesita ayuda ingrese --help');
     break;
+  }
+}
+
+
+if (argument.length === 3) {
+  if (
+    (argument[1] === "--stats" && argument[2] === "--validate") ||
+    (argument[1] === "--validate" && argument[2] === "--stats")
+  ) {
+    mdLinks(argument[0], { validate: true })
+      .then(resolve => console.log(`${totalLinks(resolve)} \nUnique: ${uniqueLinks(resolve)} ${brokenLinks(resolve)}`))
+      .catch(reject => console.log(reject));
+  } else {
+    console.log('Comando no válido. Necesita ayuda ingrese --help.');
   }
 }

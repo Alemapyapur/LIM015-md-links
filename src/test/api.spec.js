@@ -212,7 +212,7 @@ describe('Función que valida los links extraidos', () => {
       });
 });
 
-// mock de data es una data falsa
+// mock de data, es una data falsa
 const validLinks = [
   {
     href: 'https://nodejs.org/api/path.html',

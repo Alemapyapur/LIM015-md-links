@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 const apiPage = require('./api.js');
 // const simplePath = process.argv[2]; // el 2 representa el indice
 
