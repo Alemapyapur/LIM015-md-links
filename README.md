@@ -20,7 +20,7 @@ Esta es una libreria de NodeJS que contiene un extractor de links, recibe una ru
 ### 📌 Diagrama de flujos
 
 #### [📎 MD-LINKS](https://raw.githubusercontent.com/Alemapyapur/LIM015-md-links/route/src/img/mdLinks-flowcharts.png)
-#### [📎 CLI](https://raw.githubusercontent.com/Alemapyapur/LIM015-md-links/route/src/img/flowcharts-cli.png)
+#### [📎 CLI](https://raw.githubusercontent.com/Alemapyapur/LIM015-md-links/route/src/img/flowcharts-cli.jpg)
 ### 📌 Valor de retorno
 
 La función **retorna una promesa** (`Promise`) que **resuelva a un arreglo**
