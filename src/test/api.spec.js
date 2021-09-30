@@ -1,6 +1,8 @@
 const { validatePath, validatePathAbsolute, validateFile, validateDirectory, validateReadDirectory,
-  validateMd, validateReadFileMd, validateReadfile, validatefileWithPath, searchPathMd, extractLinksMd, validateLink
-} = require('../api');
+  validateMd, validateReadFileMd, validateReadfile, validatefileWithPath, searchPathMd, extractLinksMd, validateLink,
+} = require('../api.js');
+const {uniqueLinks, brokenLinks, totalLinks} = require('../api.js')
+const { mdLinks } = require('../function-mdlinks.js')
 
 // *Función que valida la ruta
 describe('Función que valida la ruta:', () => {
@@ -140,6 +142,7 @@ describe('Función que busca archivos con extensión .md de un file o directorio
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba1.md',
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba2.md',
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba3.md',
+      'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba4.md',
       'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md'
     ];
     expect(searchPathMd('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\'))
@@ -148,7 +151,7 @@ describe('Función que busca archivos con extensión .md de un file o directorio
 });
 
 
-// *Funcion para extraer los links de un archivo .md, devuelve array de objetos
+// *Función para extraer los links de un archivo .md, devuelve array de objetos
 describe('Función que extre los links de un archivo o directorio .md', () => {
   it('extractLinksMd es una función', () => {
     expect(typeof extractLinksMd).toBe('function');
@@ -169,12 +172,12 @@ describe('Función que extre los links de un archivo o directorio .md', () => {
   });
 });
 
-// *Funcion para validar los links que se extrajeron de un archivo .md
+// *Función para validar los links que se extrajeron de un archivo .md
 describe('Función que valida los links extraidos', () => {
     it('validateLink es una función', () => {
       expect(typeof validateLink).toBe('function');
     });
-    it('Debería validar los links que extraidos', () => {
+    it('Debería validar los links OK extraidos', () => {
     //Se crea una variable returnLinks con la cual se comparara la ruta de prueba, para comparar con lo que devuelva.
       const returnLinks = [
         {
@@ -191,4 +194,136 @@ describe('Función que valida los links extraidos', () => {
         // console.log(returnLinks);
         expect(res).toEqual(returnLinks)});
     });
+    it('Debería validar los links FAIL extraidos', () => {
+      //Se crea una variable returnLinks con la cual se comparara la ruta de prueba, para comparar con lo que devuelva.
+        const returnsLinks = [
+          {
+            href: 'https://www.google.com/no-existe',
+            text: 'Google Broken',
+            file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba4.md',
+            statusText: 'FAIL',
+            message: 404
+          }
+        ];
+        return validateLink('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\prueba4.md').then((res) => {
+          // console.log(res);
+          // console.log(returnLinks);
+          expect(res).toEqual(returnsLinks)});
+      });
 });
+
+// mock de data, es una data falsa
+const validLinks = [
+  {
+    href: 'https://nodejs.org/api/path.html',
+    text: 'Path',
+    file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md',
+    statusText: 'OK',
+    message: 200
+  },
+  {
+    href: 'https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e',
+    text: 'Linea de comando CLI',
+    file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md',
+    statusText: 'OK',
+    message: 200
+  },
+  {
+    href: 'https://www.google.com/no-existe',
+    text: 'Google Broken',
+    file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md',
+    statusText: 'FAIL',
+    message: 404
+  }
+];
+
+// *Función para validar los links unicos, totales y rotos.
+describe('Función que retorna enlaces unicos',() => {
+  it('uniqueLinks debería ser una función', () => {
+    expect(typeof uniqueLinks).toBe('function');
+  });
+  it('Debería retornar enlaces unicos', () => {
+    expect(uniqueLinks(validLinks)).toBe(3)
+  });
+});
+
+describe('Función que retorna enlaces rotos',() => {
+  it('brokenLinks debería ser una función', () => {
+    expect(typeof brokenLinks).toBe('function');
+  });
+  it('Debería retornar enlaces rotos', () => {
+    // console.log(brokenLinks(validLinks))
+    expect(brokenLinks(validLinks)).toEqual("\nBroken: 1")
+  });
+});
+
+describe('Función que retorna enlaces totales',() => {
+  it('totalLinks debería ser una función', () => {
+    expect(typeof totalLinks).toBe('function');
+  });
+  it('Debería retornar enlaces totales', () => {
+    expect(totalLinks(validLinks))
+    .toEqual('\nTotal: 3')
+  });
+});
+
+// *Función MdLinks
+describe('Función MdLinks que valida los links', () => {
+  it('Debería retornar un array con sus 3 propiedades si es FALSE.', () => {
+    const mdlinksFiles = [
+      {
+        href: 'https://nodejs.org/api/path.html',
+        text: 'Path',
+        file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md'
+      },
+      {
+        href: 'https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e',
+        text: 'Linea de comando CLI',
+        file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md'
+      },
+      {
+        href: 'https://www.google.com/no-existe',
+        text: 'Google Broken',
+        file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md'
+      }
+    ];
+    return expect(mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md', { validate: false }))
+    .resolves.toEqual(mdlinksFiles);
+  });
+
+  it('Debería retornar un array con sus 5 propiedades si es TRUE.', () => {
+    const mdlinkProp = [
+      {
+        href: 'https://nodejs.org/api/path.html',
+        text: 'Path',
+        file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md',
+        statusText: 'OK',
+        message: 200
+      },
+      {
+        href: 'https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e',
+        text: 'Linea de comando CLI',
+        file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md',
+        statusText: 'OK',
+        message: 200
+      },
+      {
+        href: 'https://www.google.com/no-existe',
+        text: 'Google Broken',
+        file: 'C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md',
+        statusText: 'FAIL',
+        message: 404
+      }
+    ];
+    return expect(mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd\\pruebamdlinks.md', { validate: true }))
+    .resolves.toEqual(mdlinkProp);
+  });
+
+  test('Debería retornar la ruta no existe, si hay un ERROR.', () => {
+    const error  = 'La ruta no existe';
+    return expect(mdLinks('../pruebas/prueba/pruebamd/pruebamdlinks2.md')).rejects.toEqual(error);
+  });
+});
+
+
+
