@@ -15,7 +15,15 @@
 
 Esta es una libreria de NodeJS que contiene un extractor de links, recibe una ruta de archivo en formato “.md” `Markdown` y retorna por medio de la consola un listado de todos los enlaces que contiene el proyecto, así como la línea del archivo donde se encuentra alojado. Además si se añade la opción de `validate` puede comprobar la ruta, el texto y enlace; si pone la opción `stats` puede comprobar que los enlaces están funcionando o de lo contrario están “rotos”.
 
-## 2. Consideraciones generales
+## 2. Guia de uso
+
+### 📌 Instalación de la librería
+
+Para instalar esta librería debes ejecutar la siguiente linea de comando: `npm i md-links-alemapyapur`.
+Este módulo incluye un ejecutable como una interfaz que se puede importar con require:
+const mdLinks = require('md-links-alemapyapur');
+
+## 3. Consideraciones generales
 
 ### 📌 Diagrama de flujos
 
@@ -42,11 +50,6 @@ Con `validate:true` :
 - `status`: Código de respuesta HTTP.
 - `ok`: Mensaje `fail` en caso de fallo u `ok` en caso de éxito.
 
-## 3. Guia de uso
-
-### 📌 Instalación de la librería
-
- Primero
 
 #### `mdLinks(path, options)`
 
@@ -185,31 +188,3 @@ Time:        4.48 s, estimated 5 s
 Ran all test suites.
 
 ```
-
-## 5. Checklist
-
-
-- [ ] Un board con el backlog para la implementación de la librería.
-- ✅ Documentación técnica de la librería.
-- ✅ Guía de uso e instalación de la librería
-
-### API `mdLinks(path, opts)`
-
-- [ ] El módulo exporta una función con la interfaz (API) esperada.
-- [ ] Implementa soporte para archivo individual
-- ✅ Implementa soporte para directorios
-- [ ] Implementa `options.validate`
-
-### CLI
-
-- ✅ Expone ejecutable `md-links` en el path.
-- ✅ Se ejecuta sin errores / output esperado.
-- ✅ Implementa `--validate`.
-- ✅ Implementa `--stats`.
-- ✅ Implementa `--help`.
-
-### Pruebas / tests
-
-- ✅ Pruebas unitarias cubren un mínimo del 70% de statements, functions,
-      lines, y branches.
-- ✅ Pasa tests (y linters) (`npm test`).
