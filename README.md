@@ -21,7 +21,7 @@ Esta es una libreria de NodeJS que contiene un extractor de links, recibe una ru
 
 Para instalar esta librería debes ejecutar la siguiente linea de comando: `npm i md-links-alemapyapur`.
 Este módulo incluye un ejecutable como una interfaz que se puede importar con require:
-const mdLinks = require('md-links-alemapyapur');
+`const mdLinks = require('md-links-alemapyapur')`;
 
 ## 3. Consideraciones generales
 
