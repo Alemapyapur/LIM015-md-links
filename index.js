@@ -2,20 +2,9 @@
 const { mdLinks } = require('./src/function-mdlinks.js');
 const { uniqueLinks, brokenLinks, totalLinks } = require('./src/api.js')
 
-// const arg = process.argv[2];
-// Retorna un arr con los arg pasados a la terminal, 1 ejecutable node, 2 ruta del ejecutabl,3 args
 const [, , ...argument] = process.argv;
 
-// console.log(process.argv[0]); // node (length 1)
-// console.log(process.argv[1]); // mdlinks (length 2)
-// console.log(process.argv[2]); // path (length 3)
-// console.log(process.argv[3]); // validate  or stats (length 4)
-// console.log(process.argv[4]); // stats or validate(length 5)
-// console.log("*", process.argv.length);  */
-
-// * +----------------------------------------------------------------------------------------------------------------+
-// * |                                                OPTION STATS                                                    |
-// * +----------------------------------------------------------------------------------------------------------------+
+// *  OPTION STATS
 
 if (argument.length === 1) {
   mdLinks(argument[0], { validate: false })
@@ -30,7 +19,6 @@ if (argument.length === 2) {
   switch (argument[1]) {
   case '--validate':
     mdLinks(argument[0], { validate: true })
-    // .then(resolve => {console.log(resolve)})
     .then(resolve => {
       resolve.map((objeto) => {
       console.log(`
@@ -70,7 +58,6 @@ if (argument.length === 2) {
     break;
   }
 }
-
 
 if (argument.length === 3) {
   if (

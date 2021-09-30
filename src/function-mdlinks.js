@@ -1,9 +1,6 @@
 const apiPage = require('./api.js');
-// const simplePath = process.argv[2]; // el 2 representa el indice
 
-// * +----------------------------------------------------------------------------------------------------------------+
-// * |                                                FUNCION MD-LINKS                                                |
-// * +----------------------------------------------------------------------------------------------------------------+
+// *  FUNCION MD-LINKS
 
 const mdLinks = (path, options) =>
   new Promise((resolve, reject) => {
@@ -30,13 +27,5 @@ const mdLinks = (path, options) =>
     }
   });
 
-
-// Cuando pongo true, y la ruta si existe me deberia retorna 5 propiedades href, text, file, file, statusText y message
-// mdLinks('C:\\Users\\Alemapyapur\\Desktop\\LABORATORIA\\LIM015-md-links\\src\\pruebas\\prueba\\pruebamd', { validate: true })
-// .then(resolve => { console.log(resolve) }).catch(reject => console.log(reject));
-
-// mdLinks(simplePath, { validate: true })
-// .then(resolve => { console.log(resolve)}).catch(reject => console.log(reject));
-// node ./src/md-links.js src\pruebas\prueba\pruebamd\pruebamdlinks.md
 
 module.exports = { mdLinks };
