@@ -16,7 +16,12 @@
 Esta es una libreria de NodeJS que contiene un extractor de links, recibe una ruta de archivo en formato “.md” `Markdown` y retorna por medio de la consola un listado de todos los enlaces que contiene el proyecto, así como la línea del archivo donde se encuentra alojado. Además si se añade la opción de `validate` puede comprobar la ruta, el texto y enlace; si pone la opción `stats` puede comprobar que los enlaces están funcionando o de lo contrario están “rotos”.
 
 ## 2. Consideraciones generales
-### Valor de retorno
+
+### 📌 Diagrama de flujos
+
+#### [📎 MD-LINKS](https://raw.githubusercontent.com/Alemapyapur/LIM015-md-links/route/src/img/mdLinks-flowcharts.png)
+#### [📎 CLI](https://raw.githubusercontent.com/Alemapyapur/LIM015-md-links/route/src/img/flowcharts-cli.png)
+### 📌 Valor de retorno
 
 La función **retorna una promesa** (`Promise`) que **resuelva a un arreglo**
 (`Array`) de objetos (`Object`), donde cada objeto representa un link y contiene
@@ -38,13 +43,13 @@ Con `validate:true` :
 
 ## 3. Guia de uso
 
-### Instalación de la librería
+### 📌 Instalación de la librería
 
-📌 Primero 
+ Primero
 
 #### `mdLinks(path, options)`
 
-### CLI (Command Line Interface - Interfaz de Línea de Comando)
+### 📌 CLI (Command Line Interface - Interfaz de Línea de Comando)
 
 El ejecutable de nuestra aplicación debe poder ejecutarse de la siguiente
 manera a través de la **terminal**:
@@ -66,7 +71,7 @@ argumento), analizar el archivo Markdown e imprimir los links que vaya
 encontrando, junto con la ruta del archivo donde aparece y el texto
 que hay dentro del link (truncado a 50 caracteres).
 
-### Options
+### 📌 Options
 
 #### Tabla de comandos
 
@@ -87,7 +92,7 @@ que hay dentro del link (truncado a 50 caracteres).
 
 #### Ejemplos de los comandos
 
-📌 `--validate`
+📝 `--validate`
 
 Si pasamos la opción `--validate`, el módulo debe hacer una petición HTTP para
 averiguar si el link funciona o no. Si el link resulta en una redirección a una
@@ -106,7 +111,7 @@ Lo que se obtiene:
 
 ![](./src/img/mdLinks-route-validate.png)
 
-📌 `--stats`
+📝 `--stats`
 
 Si pasamos la opción `--stats` el output (salida) será un texto con estadísticas
 básicas sobre los links.
@@ -121,7 +126,7 @@ Unique: 3
 Lo que se obtiene:
 ![](./src/img/mdLinks-route-stats.png)
 
-📌 `--stats` y `--validate`
+📝 `--stats` y `--validate`
 
 También podemos combinar `--stats` y `--validate` para obtener estadísticas que necesiten de los resultados de la validación.
 
@@ -149,7 +154,7 @@ Broken: 1
 Lo que se obtiene:
 ![](./src/img/mdLinks-route-validate-stats.png)
 
-📌 `--help`
+📝 `--help`
 
 Si pasamos la opción `--help` el output (salida) será un cuadro con los comandos disponibles.
 Lo que se obtiene:
@@ -160,7 +165,25 @@ Lo que se obtiene:
 
 - Las pruebas unitarias dan una cobertura del 80% de statements (sentencias), functions (funciones), lines (líneas), y branches (ramas).
 Lo que se obtiene:
-![](./src/img/mdLinks-test.png)
+
+```
+ PASS  src/test/api.spec.js
+
+
+---------------------|---------|----------|---------|---------|-------------------
+File                 | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+---------------------|---------|----------|---------|---------|-------------------
+All files            |   97.67 |       90 |   96.43 |   97.26 | 
+ api.js              |   98.53 |    92.86 |      96 |   98.18 | 164
+ function-mdlinks.js |   94.44 |    83.33 |     100 |   94.44 | 11
+---------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       39 passed, 39 total
+Snapshots:   0 total
+Time:        4.48 s, estimated 5 s
+Ran all test suites.
+
+```
 
 ## 5. Checklist
 
