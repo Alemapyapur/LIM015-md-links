@@ -1,13 +1,11 @@
-# Markdown Links
+# Markdown Links  &nbsp; ![](https://komarev.com/ghpvc/?username=alemapyapur-mdLinks&color=blueviolet)
 
 ## Índice
 
-- [1. Resumen del proyecto](#1--resumen-del-proyecto)
-- [2. Consideraciones generales](#2-consideraciones-generales)
-- [3. Guia de uso](#3-guia-de-uso)
+- [1. Resumen del proyecto](#1-resumen-del-proyecto)
+- [2. Guia de uso](#2-guia-de-uso)
+- [3. Consideraciones generales](#3-consideraciones-generales)
 - [4. Pruebas unitarias](#4-pruebas-unitarias)
-- [5. Checklist](#5-checklist)
-
 
 ---
 
